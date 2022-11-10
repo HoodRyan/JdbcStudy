@@ -1,5 +1,9 @@
 package com.example.demo.write;
 
 public interface WriteService {
-    Write createWrite(Long memberId, String title, String content);
+    void create(Write write);
+    void update(Long writeId, Write write);
+    void delete(Long writeId);
+
+
 }

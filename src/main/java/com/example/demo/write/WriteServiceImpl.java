@@ -8,18 +8,26 @@ import org.springframework.stereotype.Component;
 @Component
 public class WriteServiceImpl implements WriteService{
 
-    private final MemberRepository memberRepository;
+    private final WriteRepository writeRepository;
 
     @Autowired
-    public WriteServiceImpl(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
+    public WriteServiceImpl(WriteRepository writeRepository) {
+        this.writeRepository = writeRepository;
     }
 
 
     @Override
-    public Write createWrite(Long memberId, String title, String content) {
-        Member member = memberRepository.findById(memberId);
+    public void create(Write write) {
+        writeRepository.save(write);
+    }
 
-        return new Write(memberId, title, content);
+    @Override
+    public void update(Long writeId, Write write) {
+        writeRepository.update(writeId, write);
+    }
+
+    @Override
+    public void delete(Long writeId) {
+        writeRepository.delete(writeId);
     }
 }

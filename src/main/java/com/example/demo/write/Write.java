@@ -2,22 +2,22 @@ package com.example.demo.write;
 
 public class Write {
 
-    private Long memberId;
+    private Long writeId;
     private String title;
     private String content;
 
-    public Write(Long memberId, String title, String content){
-        this.memberId = memberId;
+    public Write(Long writeId, String title, String content){
+        this.writeId = writeId;
         this.title = title;
         this.content = content;
     }
 
-    public Long getMemberId() {
-        return memberId;
+    public Long getWriteId() {
+        return writeId;
     }
 
-    public void setMemberId(Long memberId) {
-        this.memberId = memberId;
+    public void setWriteId(Long memberId) {
+        this.writeId = memberId;
     }
 
     public String getTitle(){
