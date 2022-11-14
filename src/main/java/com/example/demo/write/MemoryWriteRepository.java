@@ -14,8 +14,8 @@ public class MemoryWriteRepository implements WriteRepository{
 
     @Override
     public Write save(Write write){
-        write.setWriteId(++sequence);
-        store.put(write.getWriteId(),write);
+        long id = ++sequence;
+        store.put(id,new Write(id,write.getTitle(), write.getContent()));
         return write;
     }
 
@@ -32,8 +32,8 @@ public class MemoryWriteRepository implements WriteRepository{
     @Override
     public void update(Long writeId, Write updateWrite) {
         Write findWrite = findById(writeId);
-        findWrite.setTitle(updateWrite.getTitle());
-        findWrite.setContent(updateWrite.getContent());
+        findWrite.changeWrite(updateWrite);
+
     }
 
     @Override

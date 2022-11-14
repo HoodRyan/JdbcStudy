@@ -1,13 +1,11 @@
 package com.example.demo.member;
 
-import com.example.demo.write.Write;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class MemoryMemberRepositoryTest {
@@ -20,10 +18,12 @@ class MemoryMemberRepositoryTest {
         //given
         Member member = new Member(0L,"bty","ryan");
         //when
-        Member save = memberRepository.save(member);
+        memberRepository.save(member);
 
         //then
-        Assertions.assertThat(save.getId()).isEqualTo(1L);
+        Long result = memberRepository.findById(member.getId()).getId();
+
+        Assertions.assertThat(result).isEqualTo(member.getId());
 
     }
 

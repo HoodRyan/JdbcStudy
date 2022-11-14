@@ -26,7 +26,7 @@ public class SpringConfig {
 
     @Bean
     public WriteService writeService(){
-        return new WriteServiceImpl((WriteRepository) writeRepository());
+        return new WriteServiceImpl(writeRepository());
     }
 
     @Bean
