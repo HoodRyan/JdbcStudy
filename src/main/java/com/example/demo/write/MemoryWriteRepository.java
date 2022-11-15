@@ -33,7 +33,6 @@ public class MemoryWriteRepository implements WriteRepository{
     public void update(Long writeId, Write updateWrite) {
         Write findWrite = findById(writeId);
         findWrite.changeWrite(updateWrite);
-
     }
 
     @Override
