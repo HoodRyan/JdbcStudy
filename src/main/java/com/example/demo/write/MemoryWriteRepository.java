@@ -2,10 +2,7 @@ package com.example.demo.write;
 
 import com.example.demo.member.Member;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MemoryWriteRepository implements WriteRepository{
 
@@ -13,15 +10,22 @@ public class MemoryWriteRepository implements WriteRepository{
     private static long sequence = 0L;
 
     @Override
-    public Write save(Write write){
-        long id = ++sequence;
-        store.put(id,new Write(id,write.getTitle(), write.getContent()));
+    public Write save(Write write, Member member){
+
+        if(write.getWriteId() == null){
+            long id = ++sequence;
+            Write saveWrite = new Write(id, write.getTitle(), write.getContent(), member.getId());
+            store.put(id,saveWrite);
+            return saveWrite;
+        }else{
+            store.put(write.getWriteId(), write);
+        }
         return write;
     }
 
     @Override
-    public Write findById(Long writeId) {
-        return store.get(writeId);
+    public Optional<Write> findById(Long writeId) {
+        return Optional.ofNullable(store.get(writeId));
     }
 
     @Override
@@ -31,8 +35,8 @@ public class MemoryWriteRepository implements WriteRepository{
 
     @Override
     public void update(Long writeId, Write updateWrite) {
-        Write findWrite = findById(writeId);
-        findWrite.changeWrite(updateWrite);
+        Optional<Write> findWrite = findById(writeId);
+        findWrite.get().changeWrite(updateWrite);
     }
 
     @Override

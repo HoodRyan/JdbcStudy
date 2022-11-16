@@ -5,6 +5,9 @@ import com.example.demo.member.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Optional;
+
 @Component
 public class WriteServiceImpl implements WriteService{
 
@@ -17,8 +20,19 @@ public class WriteServiceImpl implements WriteService{
 
 
     @Override
-    public void create(Write write) {
-        writeRepository.save(write);
+    public Write create(Write write, Member member) {
+        writeRepository.save(write, member);
+        return write;
+    }
+
+    @Override
+    public List<Write> findAllWrite() {
+        return writeRepository.findAll();
+    }
+
+    @Override
+    public Optional<Write> findOneWrite(Long writeId) {
+        return writeRepository.findById(writeId);
     }
 
     @Override

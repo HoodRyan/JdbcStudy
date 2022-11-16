@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,39 +24,46 @@ class MemoryWriteRepositoryTest {
     @Autowired
     WriteRepository writeRepository;
 
+    @Autowired
+    MemberService memberService;
+
     @Test
     void save(){
+
         //given
-        Write write = new Write(0L,"제목","본문내용");
+        Member member = memberService.join(new Member(1L,"태용","라이언"));
+        Write expected = new Write(1L,"제목","본문내용",member.getId());
         //when
-        Write save = writeRepository.save(write);
+        writeRepository.save(expected,member);
+        Write actual = writeRepository.findById(expected.getWriteId()).get();
 
         //then
-        assertThat(save.getWriteId()).isEqualTo(1L);
-
+        assertThat(actual.getWriteId()).isEqualTo(expected.getWriteId());
     }
 
     @Test
     void findById(){
         //given
-        Write write = new Write(0L,"제목","본문내용");
-        writeRepository.save(write);
+        Member member = memberService.join(new Member(0L,"태용","라이언"));
+        Write write = new Write(0L,"제목","본문내용",member.getId());
+        writeRepository.save(write,member);
 
         //when
-        Write findWrite = writeRepository.findById(write.getWriteId());
+        Optional<Write> findWrite = writeRepository.findById(write.getWriteId());
 
         //then
-        assertThat(findWrite).isEqualTo(write);
+        assertThat(findWrite.get().getWriteId()).isEqualTo(write.getWriteId());
     }
 
     @Test
     void findAll(){
         //given
-        Write write1 = new Write(0L,"제목1","내용1");
-        Write write2 = new Write(1L,"제목2","내용2");
+        Member member = memberService.join(new Member(0L,"태용","라이언"));
+        Write write1 = new Write(0L,"제목1","내용1",member.getId());
+        Write write2 = new Write(1L,"제목2","내용2",member.getId());
 
-        writeRepository.save(write1);
-        writeRepository.save(write2);
+        writeRepository.save(write1,member);
+        writeRepository.save(write2,member);
 
         //when
         List<Write> result = writeRepository.findAll();
@@ -68,35 +76,37 @@ class MemoryWriteRepositoryTest {
     @Test
     void update(){
         //given
-        Write write = new Write(0L,"제목1","내용1");
-        Write savedWrite = writeRepository.save(write);
+        Member member = memberService.join(new Member(0L,"태용","라이언"));
+        Write write = new Write(0L,"제목1","내용1",member.getId());
+        Write savedWrite = writeRepository.save(write,member);
         Long writeId = savedWrite.getWriteId();
 
         //when
-        Write updateWrite = new Write(0L,"수정 제목","내용 수정");
+        Write updateWrite = new Write(0L,"수정 제목","내용 수정", member.getId());
         writeRepository.update(writeId, updateWrite);
 
-        Write findWrite = writeRepository.findById(writeId);
+        Optional<Write> findWrite = writeRepository.findById(writeId);
 
         //then
-        assertThat(findWrite.getTitle()).isEqualTo(updateWrite.getTitle());
-        assertThat(findWrite.getContent()).isEqualTo(updateWrite.getContent());
+        assertThat(findWrite.get().getTitle()).isEqualTo(updateWrite.getTitle());
+        assertThat(findWrite.get().getContent()).isEqualTo(updateWrite.getContent());
 
     }
 
-    //모르겠다 어떻게 짜야할지.
+
     @Test
     void delete(){
+
         //given
-        Write write = new Write(0L,"제목1","내용1");
-        writeRepository.save(write);
+        Member member = memberService.join(new Member(1L,"태용","라이언"));
+        Write expected = new Write(1L,"제목","본문내용",member.getId());
+        writeRepository.save(expected,member);
 
         //when
-        writeRepository.delete(write.getWriteId());
+        writeRepository.delete(expected.getWriteId());
 
         //then
-
-
+        assertThat(writeRepository.findById(expected.getWriteId())).isEmpty();
 
     }
 }

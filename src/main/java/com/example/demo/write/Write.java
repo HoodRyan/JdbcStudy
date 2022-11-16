@@ -1,5 +1,7 @@
 package com.example.demo.write;
 
+import com.example.demo.member.Member;
+
 public class Write {
 
     private Long writeId;
@@ -8,11 +10,11 @@ public class Write {
     private Long memberId;
 
 
-    public Write(Long writeId, String title, String content){
+    public Write(Long writeId, String title, String content, Long memberId){
         this.writeId = writeId;
         this.title = title;
         this.content = content;
-
+        this.memberId = memberId;
     }
 
     public Long getWriteId() {
@@ -24,6 +26,7 @@ public class Write {
     public String getContent() {
         return content;
     }
+
     public void changeWrite(Write updateWrite) {
         this.title = updateWrite.getTitle();
         this.content = updateWrite.getContent();
