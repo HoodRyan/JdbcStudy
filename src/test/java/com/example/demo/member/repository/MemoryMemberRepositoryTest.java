@@ -31,7 +31,7 @@ class MemoryMemberRepositoryTest {
         Member expected = memberRepository.save(new Member(null, "bty", "ryan"));
         //then
         Member actual = memberRepository.findById(expected.getId()).get();
-        Assertions.assertThat(actual).isEqualTo(expected);
+        Assertions.assertThat(actual.getId()).isEqualTo(expected.getId());
 
     }
 
