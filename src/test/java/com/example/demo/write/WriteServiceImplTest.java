@@ -1,11 +1,9 @@
 package com.example.demo.write;
 
-import com.example.demo.member.MemberService;
+import com.example.demo.member.service.MemberService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class WriteServiceImplTest {

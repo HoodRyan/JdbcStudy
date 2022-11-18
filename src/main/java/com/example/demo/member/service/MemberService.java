@@ -1,4 +1,6 @@
-package com.example.demo.member;
+package com.example.demo.member.service;
+
+import com.example.demo.member.entity.Member;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,4 +14,5 @@ public interface MemberService {
     Optional<Member> findOneMember(Long memberId);  //회원 검색
 
     void deleteMember(Long memberId);   //회원 삭제
+
 }

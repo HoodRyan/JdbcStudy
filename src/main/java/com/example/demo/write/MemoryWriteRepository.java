@@ -1,6 +1,6 @@
 package com.example.demo.write;
 
-import com.example.demo.member.Member;
+import com.example.demo.member.entity.Member;
 
 import java.util.*;
 
@@ -42,6 +42,14 @@ public class MemoryWriteRepository implements WriteRepository{
     @Override
     public void delete(Long writeId) {
         store.remove(writeId);
+    }
+
+    @Override
+    public void deleteAll() {
+        List<Write> all = findAll();
+        for (Write write : all) {
+            delete(write.getWriteId());
+        }
     }
 
 

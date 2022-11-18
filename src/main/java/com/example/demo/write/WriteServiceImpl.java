@@ -1,7 +1,6 @@
 package com.example.demo.write;
 
-import com.example.demo.member.Member;
-import com.example.demo.member.MemberRepository;
+import com.example.demo.member.entity.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

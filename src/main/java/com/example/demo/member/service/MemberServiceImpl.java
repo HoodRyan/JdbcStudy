@@ -1,13 +1,16 @@
-package com.example.demo.member;
+package com.example.demo.member.service;
 
+import com.example.demo.member.entity.Member;
+import com.example.demo.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Component
-public class MemberServiceImpl implements MemberService{
+public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
 
@@ -20,8 +23,7 @@ public class MemberServiceImpl implements MemberService{
     public Member join(Member member) {
         duplicateNicknameCheck(member);
 
-        memberRepository.save(member);
-        return member;
+        return memberRepository.save(member);
     }
 
     //중복 닉네임 검사
@@ -39,11 +41,17 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public Optional<Member> findOneMember(Long memberId) {
-        return memberRepository.findById(memberId);
+        Optional<Member> byId = memberRepository.findById(memberId);
+        if(byId.isEmpty()){
+            throw new NoSuchElementException("값이 없다");
+        }
+        return byId;
     }
 
     @Override
     public void deleteMember(Long memberId) {
         memberRepository.delete(memberId);
     }
+
+
 }

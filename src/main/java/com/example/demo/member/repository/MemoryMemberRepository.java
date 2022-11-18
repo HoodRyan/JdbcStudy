@@ -1,10 +1,10 @@
-package com.example.demo.member;
+package com.example.demo.member.repository;
 
-import com.example.demo.write.Write;
+import com.example.demo.member.entity.Member;
 
 import java.util.*;
 
-public class MemoryMemberRepository implements MemberRepository{
+public class MemoryMemberRepository implements MemberRepository {
 
     private static Map<Long, Member> store = new HashMap<>();
     private static long sequence = 0L;
@@ -46,6 +46,14 @@ public class MemoryMemberRepository implements MemberRepository{
     @Override
     public void delete(Long id) {
         store.remove(id);
+    }
+
+    @Override
+    public void clear() {
+        List<Member> all = findAll();
+        for (Member member : all) {
+            delete(member.getId());
+        }
     }
 
 }

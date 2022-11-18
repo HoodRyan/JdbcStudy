@@ -1,6 +1,6 @@
 package com.example.demo.write;
 
-import com.example.demo.member.Member;
+import com.example.demo.member.entity.Member;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +12,7 @@ public interface WriteRepository {
     List<Write> findAll();
     void update(Long writeId, Write write);
     void delete(Long writeId);
-
+    void deleteAll();
 
 
 }

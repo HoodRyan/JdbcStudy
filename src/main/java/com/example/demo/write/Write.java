@@ -1,7 +1,5 @@
 package com.example.demo.write;
 
-import com.example.demo.member.Member;
-
 public class Write {
 
     private Long writeId;
