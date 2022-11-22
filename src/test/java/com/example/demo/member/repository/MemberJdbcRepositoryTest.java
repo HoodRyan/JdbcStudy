@@ -30,8 +30,9 @@ class MemberJdbcRepositoryTest {
         Member member = memberJdbcRepository.save(new Member(null, "태용", "라이언"));
 
         //then
-        Optional<Member> actual = memberJdbcRepository.findById(member.getId());
-        assertThat(actual.get().getId()).isEqualTo(member.getId());
+//        Optional<Member> actual = memberJdbcRepository.findById(member.getId());
+        Optional<Member> actual = memberJdbcRepository.findByNickname(member.getNickname());
+        assertThat(actual.get().getNickname()).isEqualTo(member.getNickname());
     }
 
     @Test
@@ -42,6 +43,7 @@ class MemberJdbcRepositoryTest {
         System.out.println(expected.getId());
         //when
         Member actual = memberJdbcRepository.findById(expected.getId()).get();
+        System.out.println(actual.getId());
 
         //then
         assertThat(actual.getId()).isEqualTo(expected.getId());
@@ -62,14 +64,6 @@ class MemberJdbcRepositoryTest {
         //given
         Member save1 = memberJdbcRepository.save(new Member(null, "태용", "라이언"));
         Member save2 = memberJdbcRepository.save(new Member(null, "원진", "프로도"));
-
-        System.out.println(save1.getId());
-        System.out.println(save1.getName());
-        System.out.println(save1.getNickname());
-
-        System.out.println(save2.getId());
-        System.out.println(save2.getName());
-        System.out.println(save2.getNickname());
 
         //when
         List<Member> result = memberJdbcRepository.findAll();

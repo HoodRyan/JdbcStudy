@@ -29,5 +29,4 @@ public class Write {
         this.title = updateWrite.getTitle();
         this.content = updateWrite.getContent();
     }
-
 }
