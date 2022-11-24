@@ -44,8 +44,7 @@ public class MemberJdbcRepositoryV2 implements MemberRepository{
     public Member save(Member member){
         SqlParameterSource param = new BeanPropertySqlParameterSource(member);
         long id = jdbcInsert.executeAndReturnKey(param).longValue();
-        Member mem = new Member(id, member.getName(), member.getNickname());
-        return mem;
+        return new Member(id, member.getName(), member.getNickname());
     }
 
 

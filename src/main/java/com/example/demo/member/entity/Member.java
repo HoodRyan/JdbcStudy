@@ -1,7 +1,5 @@
 package com.example.demo.member.entity;
 
-import com.example.demo.write.Write;
-
 public class Member {
 
     private Long id;

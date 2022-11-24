@@ -1,6 +1,8 @@
-package com.example.demo.write;
+package com.example.demo.write.service;
 
 import com.example.demo.member.entity.Member;
+import com.example.demo.write.repository.WriteRepository;
+import com.example.demo.write.entity.Write;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -8,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class WriteServiceImpl implements WriteService{
+public class WriteServiceImpl implements WriteService {
 
     private final WriteRepository writeRepository;
 
@@ -19,8 +21,8 @@ public class WriteServiceImpl implements WriteService{
 
 
     @Override
-    public Write create(Write write, Member member) {
-        writeRepository.save(write, member);
+    public Write create(Write write) {
+        writeRepository.save(write);
         return write;
     }
 

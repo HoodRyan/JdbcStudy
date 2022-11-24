@@ -1,6 +1,8 @@
-package com.example.demo.write;
+package com.example.demo.write.service;
 
 import com.example.demo.member.service.MemberService;
+import com.example.demo.write.repository.WriteRepository;
+import com.example.demo.write.service.WriteService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

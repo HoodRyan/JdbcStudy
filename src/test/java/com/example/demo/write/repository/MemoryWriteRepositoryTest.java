@@ -1,8 +1,10 @@
-package com.example.demo.write;
+package com.example.demo.write.repository;
 
 import com.example.demo.member.entity.Member;
 import com.example.demo.member.repository.MemberRepository;
 import com.example.demo.member.service.MemberService;
+import com.example.demo.write.entity.Write;
+import com.example.demo.write.repository.WriteRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +29,7 @@ class MemoryWriteRepositoryTest {
 
     @BeforeEach
     void clear(){
-        writeRepository.deleteAll();
+        writeRepository.clear();
         memberRepository.clear();
     }
 
@@ -38,7 +40,7 @@ class MemoryWriteRepositoryTest {
         Member member = memberService.join(new Member(null,"태용","라이언"));
         Write expected = new Write(null,"제목","본문내용",member.getId());
         //when
-        Write save = writeRepository.save(expected, member);
+        Write save = writeRepository.save(expected);
         Write actual = writeRepository.findById(save.getWriteId()).get();
 
         //then
@@ -50,7 +52,7 @@ class MemoryWriteRepositoryTest {
         //given
         Member member = memberService.join(new Member(null,"태용","라이언"));
         Write write = new Write(null,"제목","본문내용",member.getId());
-        Write save = writeRepository.save(write, member);
+        Write save = writeRepository.save(write);
 
         //when
         Optional<Write> findWrite = writeRepository.findById(save.getWriteId());
@@ -67,8 +69,8 @@ class MemoryWriteRepositoryTest {
         Write write1 = new Write(null,"제목1","내용1",member.getId());
         Write write2 = new Write(null,"제목2","내용2",member.getId());
 
-        Write save1 = writeRepository.save(write1, member);
-        Write save2 = writeRepository.save(write2, member);
+        Write save1 = writeRepository.save(write1);
+        Write save2 = writeRepository.save(write2);
 
         //when
         List<Write> result = writeRepository.findAll();
@@ -84,7 +86,7 @@ class MemoryWriteRepositoryTest {
         //given
         Member member = memberService.join(new Member(null,"태용","라이언"));
         Write write = new Write(null,"제목1","내용1",member.getId());
-        Write savedWrite = writeRepository.save(write,member);
+        Write savedWrite = writeRepository.save(write);
         Long writeId = savedWrite.getWriteId();
 
         //when
@@ -106,7 +108,7 @@ class MemoryWriteRepositoryTest {
         //given
         Member member = memberService.join(new Member(null,"태용","라이언"));
         Write expected = new Write(null,"제목","본문내용",member.getId());
-        writeRepository.save(expected,member);
+        writeRepository.save(expected);
 
         //when
         writeRepository.delete(expected.getWriteId());
