@@ -12,10 +12,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 //@Repository
 public class WriteJdbcRepositoryV2 implements WriteRepository{
@@ -48,6 +45,14 @@ public class WriteJdbcRepositoryV2 implements WriteRepository{
         }catch (EmptyResultDataAccessException e){
             return Optional.empty();
         }
+    }
+
+    @Override
+    public List<Write> findByTitle(String title) {
+        String sql = "select * from Write where title like '%'||:title||'%'";
+        Map<String, Object> param = Collections.singletonMap("title",title);
+        List<Write> find = template.query(sql, param, writeRowMapper());
+        return find;
     }
 
     @Override

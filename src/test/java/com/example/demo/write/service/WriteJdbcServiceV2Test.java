@@ -25,7 +25,6 @@ class WriteJdbcServiceV2Test {
     WriteJdbcRepositoryV2 writeJdbcRepositoryV2;
     @Autowired
     WriteJdbcServiceV2 writeJdbcServiceV2;
-
     @Autowired
     MemberJdbcRepositoryV2 memberJdbcRepositoryV2;
     @Autowired
@@ -48,6 +47,29 @@ class WriteJdbcServiceV2Test {
         //then
         assertThat(expected.getWriteId()).isEqualTo(actual.get().getWriteId());
 
+    }
+
+    @Test
+    void searchTitle(){
+        //given
+        Member member = memberJdbcServiceV2.join(new Member(null, "태용", "라이언"));
+        Member member2 = memberJdbcServiceV2.join(new Member(null, "원진", "프로도"));
+        Write expected1 = writeJdbcServiceV2.create(new Write(null, "제목123", "내용", member.getId()));
+        Write expected2 = writeJdbcServiceV2.create(new Write(null, "ㅂㅈㄷㄱ", "ㅋㅋ", member.getId()));
+        Write expected3 = writeJdbcServiceV2.create(new Write(null, "제목789", "흠..", member2.getId()));
+        Write expected4 = writeJdbcServiceV2.create(new Write(null, "ㅁㄴㅇㄹ", "내용", member2.getId()));
+
+        //when
+        List<Write> actual = writeJdbcServiceV2.searchTitle("제목");
+
+        //then
+        assertThat(actual.get(0).getWriteId()).isEqualTo(expected1.getWriteId());
+        assertThat(actual.get(1).getWriteId()).isEqualTo(expected3.getWriteId());
+
+
+        for(int i=0;i<actual.size();i++){
+            System.out.println(actual.get(i).getTitle() +" "+ actual.get(i).getContent() +" "+ actual.get(i).getMember_id());
+        }
     }
 
 

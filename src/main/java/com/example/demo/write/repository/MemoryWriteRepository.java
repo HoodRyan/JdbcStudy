@@ -31,6 +31,11 @@ public class MemoryWriteRepository implements WriteRepository {
     }
 
     @Override
+    public List<Write> findByTitle(String title) {
+        return null;
+    }
+
+    @Override
     public List<Write> findAll() {
         return new ArrayList<>(store.values());
     }

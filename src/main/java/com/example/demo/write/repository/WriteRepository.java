@@ -10,6 +10,7 @@ public interface WriteRepository {
 
     Write save(Write write);
     Optional<Write> findById(Long writeId);
+    List<Write> findByTitle(String title);
     List<Write> findAll();
     void update(Long writeId, Write write);
     void delete(Long writeId);

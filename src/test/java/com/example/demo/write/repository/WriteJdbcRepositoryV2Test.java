@@ -60,6 +60,23 @@ class WriteJdbcRepositoryV2Test {
     }
 
     @Test
+    void findByTitle(){
+        //given
+        Member member = memberJdbcServiceV2.join(new Member(null, "태용", "라이언"));
+        Write expected1 = writeJdbcRepositoryV2.save(new Write(null, "제목1", "내용1", member.getId()));
+        Write expected2 = writeJdbcRepositoryV2.save(new Write(null, "제목2", "내용2", member.getId()));
+        Write expected3 = writeJdbcRepositoryV2.save(new Write(null, "제목3", "내용3", member.getId()));
+
+        //when
+        List<Write> actual = writeJdbcRepositoryV2.findByTitle("제목");
+
+        //then
+        assertThat(actual.get(0).getTitle()).isEqualTo(expected1.getTitle());
+        assertThat(actual.get(1).getTitle()).isEqualTo(expected2.getTitle());
+        assertThat(actual.get(2).getTitle()).isEqualTo(expected3.getTitle());
+
+    }
+    @Test
     void findAll() {
         //given
         Member member1 = memberJdbcServiceV2.join(new Member(null, "태용", "라이언"));
@@ -77,6 +94,8 @@ class WriteJdbcRepositoryV2Test {
         assertThat(expected2.getWriteId()).isEqualTo(result.get(1).getWriteId());
 
     }
+
+
 
     @Test
     void update() {

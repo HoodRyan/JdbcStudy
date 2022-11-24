@@ -32,6 +32,11 @@ public class WriteServiceImpl implements WriteService {
     }
 
     @Override
+    public List<Write> searchTitle(String title) {
+        return null;
+    }
+
+    @Override
     public Optional<Write> findOneWrite(Long writeId) {
         return writeRepository.findById(writeId);
     }

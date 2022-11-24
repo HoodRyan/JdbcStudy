@@ -28,6 +28,11 @@ public class WriteJdbcServiceV2 implements WriteService{
     }
 
     @Override
+    public List<Write> searchTitle(String title) {
+        return writeJdbcRepositoryV2.findByTitle(title);
+    }
+
+    @Override
     public Optional<Write> findOneWrite(Long writeId) {
         Optional<Write> byId = writeJdbcRepositoryV2.findById(writeId);
         if(byId.isEmpty()){
