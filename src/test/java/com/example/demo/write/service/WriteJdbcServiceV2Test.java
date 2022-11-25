@@ -65,7 +65,7 @@ class WriteJdbcServiceV2Test {
         //then
         assertThat(actual.get(0).getWriteId()).isEqualTo(expected1.getWriteId());
         assertThat(actual.get(1).getWriteId()).isEqualTo(expected3.getWriteId());
-
+        assertThat(actual.get(0).getTitle()).isEqualTo(expected1.getTitle());
 
         for(int i=0;i<actual.size();i++){
             System.out.println(actual.get(i).getTitle() +" "+ actual.get(i).getContent() +" "+ actual.get(i).getMember_id());
