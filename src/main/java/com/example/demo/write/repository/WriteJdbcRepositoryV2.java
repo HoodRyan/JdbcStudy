@@ -49,13 +49,10 @@ public class WriteJdbcRepositoryV2 implements WriteRepository{
     @Override
     public Optional<Write> findById(Long writeId) {
         String sql = "select * from Write where id = :id";
-        try{
-            Map<String, Object> param = Collections.singletonMap("id",writeId);
-            Write write = template.queryForObject(sql, param, writeRowMapper());
-            return Optional.of(write);
-        }catch (EmptyResultDataAccessException e){
-            return Optional.empty();
-        }
+        Map<String, Object> param = Collections.singletonMap("id",writeId);
+        Write write = template.queryForObject(sql, param, writeRowMapper());
+        return Optional.ofNullable(write);
+
     }
 
     /**
@@ -67,8 +64,7 @@ public class WriteJdbcRepositoryV2 implements WriteRepository{
     public List<Write> findByTitle(String title) {
         String sql = "select * from Write where title like '%'||:title||'%'";
         Map<String, Object> param = Collections.singletonMap("title",title);
-        List<Write> find = template.query(sql, param, writeRowMapper());
-        return find;
+        return template.query(sql, param, writeRowMapper());
     }
 
     /**
@@ -78,8 +74,7 @@ public class WriteJdbcRepositoryV2 implements WriteRepository{
     @Override
     public List<Write> findAll() {
         String sql = "select * from Write";
-        List<Write> find = template.query(sql, writeRowMapper());
-        return find;
+        return template.query(sql, writeRowMapper());
     }
 
     /**

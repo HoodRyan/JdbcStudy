@@ -10,10 +10,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.util.List;
 import java.util.Optional;
 
+import static com.example.demo.common.MemberFixtures.멤버_회원가입1;
+import static com.example.demo.common.MemberFixtures.멤버_회원가입2;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -38,7 +41,7 @@ class WriteJdbcRepositoryV2Test {
     @DisplayName("게시글 저장")
     void save() {
         //given & when
-        Member member = memberJdbcServiceV2.join(new Member(null, "태용", "라이언"));
+        Member member = memberJdbcServiceV2.join(멤버_회원가입1);
         Write expected = writeJdbcRepositoryV2.save(new Write(null, "제목", "내용", member.getId()));
 
         Optional<Write> actual = writeJdbcRepositoryV2.findById(expected.getWriteId());
@@ -51,7 +54,7 @@ class WriteJdbcRepositoryV2Test {
     @DisplayName("게시글 아이디로 정보 조회")
     void findById() {
         //given
-        Member member = memberJdbcServiceV2.join(new Member(null, "태용", "라이언"));
+        Member member = memberJdbcServiceV2.join(멤버_회원가입1);
         Write expected = writeJdbcRepositoryV2.save(new Write(null, "제목", "내용", member.getId()));
 
         //when
@@ -66,7 +69,7 @@ class WriteJdbcRepositoryV2Test {
     @DisplayName("게시글 제목(키워드) 단어로 조회")
     void findByTitle(){
         //given
-        Member member = memberJdbcServiceV2.join(new Member(null, "태용", "라이언"));
+        Member member = memberJdbcServiceV2.join(멤버_회원가입1);
         Write expected1 = writeJdbcRepositoryV2.save(new Write(null, "제목1", "내용1", member.getId()));
         Write expected2 = writeJdbcRepositoryV2.save(new Write(null, "제목2", "내용2", member.getId()));
         Write expected3 = writeJdbcRepositoryV2.save(new Write(null, "제목3", "내용3", member.getId()));
@@ -84,8 +87,8 @@ class WriteJdbcRepositoryV2Test {
     @DisplayName("게시글 전체 조회")
     void findAll() {
         //given
-        Member member1 = memberJdbcServiceV2.join(new Member(null, "태용", "라이언"));
-        Member member2 = memberJdbcServiceV2.join(new Member(null, "원진", "프로도"));
+        Member member1 = memberJdbcServiceV2.join(멤버_회원가입1);
+        Member member2 = memberJdbcServiceV2.join(멤버_회원가입2);
         Write expected1 = writeJdbcRepositoryV2.save(new Write(null, "제목1", "내용1", member1.getId()));
         Write expected2 = writeJdbcRepositoryV2.save(new Write(null, "제목2", "내용2", member2.getId()));
 
@@ -106,7 +109,7 @@ class WriteJdbcRepositoryV2Test {
     @DisplayName("게시글 수정")
     void update() {
         //given
-        Member member = memberJdbcServiceV2.join(new Member(null, "태용", "라이언"));
+        Member member = memberJdbcServiceV2.join(멤버_회원가입1);
         Write newWrite = new Write(null, "제목1", "내용1", member.getId());
         Write expected = writeJdbcRepositoryV2.save(newWrite);
         Long writeId = expected.getWriteId();
@@ -128,7 +131,7 @@ class WriteJdbcRepositoryV2Test {
     @DisplayName("게시글 삭제")
     void delete() {
         //given
-        Member member = memberJdbcServiceV2.join(new Member(null, "태용", "라이언"));
+        Member member = memberJdbcServiceV2.join(멤버_회원가입1);
         Write newWrite = new Write(null, "제목1", "내용1", member.getId());
         Write expected = writeJdbcRepositoryV2.save(newWrite);
 
@@ -136,6 +139,6 @@ class WriteJdbcRepositoryV2Test {
         writeJdbcRepositoryV2.delete(expected.getWriteId());
 
         //then
-        assertThat(writeJdbcRepositoryV2.findById(expected.getWriteId())).isEmpty();
+        assertThrows(EmptyResultDataAccessException.class,()->writeJdbcRepositoryV2.findById(expected.getWriteId()));
     }
 }

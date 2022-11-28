@@ -82,8 +82,7 @@ public class MemberJdbcRepositoryV2 implements MemberRepository{
     @Override
     public List<Member> findAll() {
         String sql = "select * from Member";
-        List<Member> find = template.query(sql, memberRowMapper());
-        return find;
+        return template.query(sql, memberRowMapper());
     }
 
     /**
@@ -93,8 +92,7 @@ public class MemberJdbcRepositoryV2 implements MemberRepository{
     @Override
     public void delete(Long memberId) {
         String sql = "delete from Member where id = :id";
-
-        template.update(sql, Collections.singletonMap("id",memberId));
+        template.update(sql, Collections.singletonMap("id", memberId));
     }
 
     @Override
@@ -105,11 +103,9 @@ public class MemberJdbcRepositoryV2 implements MemberRepository{
         }
     }
 
-
     private RowMapper<Member> memberRowMapper(){
         return (rs, rowNum) -> {
-            Member member = new Member(rs.getLong("id"), rs.getString("name"), rs.getString("nickname"));
-            return member;
+            return new Member(rs.getLong("id"), rs.getString("name"), rs.getString("nickname"));
         };
     }
     

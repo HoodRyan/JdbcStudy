@@ -2,6 +2,7 @@ package com.example.demo.member.service;
 
 import com.example.demo.member.entity.Member;
 import com.example.demo.member.repository.MemberJdbcRepositoryV2;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,10 +13,13 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import static com.example.demo.common.MemberFixtures.멤버_회원가입1;
+import static com.example.demo.common.MemberFixtures.멤버_회원가입2;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@Slf4j
 class MemberJdbcServiceV2Test {
 
     @Autowired
@@ -26,7 +30,7 @@ class MemberJdbcServiceV2Test {
 
     @BeforeEach
     void clear(){
-        memberJdbcRepositoryV2.clear( );
+        memberJdbcRepositoryV2.clear();
     }
 
 
@@ -34,12 +38,12 @@ class MemberJdbcServiceV2Test {
     @DisplayName("회원 가입")
     void join() {
         //given & when
-        Member expected = memberJdbcServiceV2.join(new Member(null, "태용", "라이언"));
+        Member expected = memberJdbcServiceV2.join(멤버_회원가입1);
 
         //then
-        Optional<Member> actual = memberJdbcServiceV2.findOneMember(expected.getId());
+        Member actual = memberJdbcServiceV2.findOneMember(expected.getId()).get();
 
-        assertThat(actual.get().getId()).isEqualTo(expected.getId());
+        assertThat(actual.getId()).isEqualTo(expected.getId());
 
     }
 
@@ -47,14 +51,12 @@ class MemberJdbcServiceV2Test {
     @DisplayName("중복 닉네임 검사")
     void duplicateNicknameCheck(){
         //given
-        Member member1 = new Member(null, "태용", "라이언");
-        Member member2 = new Member(null, "원진", "라이언");
+        memberJdbcServiceV2.join(멤버_회원가입1);
         //when
-        memberJdbcServiceV2.join(member1);
         try{
-            memberJdbcServiceV2.join(member2);
-            fail();
+            memberJdbcServiceV2.join(new Member(null, "원진", "라이언"));
         }catch (IllegalStateException e){
+            log.info(e.getMessage());
             assertThat(e.getMessage()).isEqualTo("이미 존재하는 닉네임입니다");
         }
 
@@ -64,8 +66,8 @@ class MemberJdbcServiceV2Test {
     @DisplayName("전체 회원 정보 조회")
     void findAllMember() {
         //given
-        Member expected1 = memberJdbcServiceV2.join(new Member(null, "태용", "라이언"));
-        Member expected2 = memberJdbcServiceV2.join(new Member(null, "원진", "프로도"));
+        Member expected1 = memberJdbcServiceV2.join(멤버_회원가입1);
+        Member expected2 = memberJdbcServiceV2.join(멤버_회원가입2);
 
         //when
         List<Member> actual = memberJdbcServiceV2.findAllMember();
@@ -75,19 +77,13 @@ class MemberJdbcServiceV2Test {
 
         assertThat(expected1.getId()).isEqualTo(actual.get(0).getId());
         assertThat(expected2.getId()).isEqualTo(actual.get(1).getId());
-
-        assertThat(expected1.getName()).isEqualTo(actual.get(0).getName());
-        assertThat(expected2.getName()).isEqualTo(actual.get(1).getName());
-
-        assertThat(expected1.getNickname()).isEqualTo(actual.get(0).getNickname());
-        assertThat(expected2.getNickname()).isEqualTo(actual.get(1).getNickname());
     }
 
     @Test
     @DisplayName("회원 아이디로 정보 검색")
     void findOneMember() {
         //given
-        Member expected = memberJdbcServiceV2.join(new Member(null, "태용", "라이언"));
+        Member expected = memberJdbcServiceV2.join(멤버_회원가입1);
 
         //when
         Optional<Member> actual = memberJdbcServiceV2.findOneMember(expected.getId());
@@ -100,7 +96,7 @@ class MemberJdbcServiceV2Test {
     @DisplayName("회원 탈퇴")
     void deleteMember() {
         //given
-        Member expected = memberJdbcServiceV2.join(new Member(null, "태용", "라이언"));
+        Member expected = memberJdbcServiceV2.join(멤버_회원가입1);
 
         //when
         memberJdbcServiceV2.deleteMember(expected.getId());
