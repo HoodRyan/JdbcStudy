@@ -6,6 +6,7 @@ import com.example.demo.member.service.MemberJdbcServiceV2;
 import com.example.demo.write.entity.Write;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,6 +35,7 @@ class WriteJdbcRepositoryV2Test {
     }
 
     @Test
+    @DisplayName("게시글 저장")
     void save() {
         //given & when
         Member member = memberJdbcServiceV2.join(new Member(null, "태용", "라이언"));
@@ -46,6 +48,7 @@ class WriteJdbcRepositoryV2Test {
     }
 
     @Test
+    @DisplayName("게시글 아이디로 정보 조회")
     void findById() {
         //given
         Member member = memberJdbcServiceV2.join(new Member(null, "태용", "라이언"));
@@ -60,6 +63,7 @@ class WriteJdbcRepositoryV2Test {
     }
 
     @Test
+    @DisplayName("게시글 제목(키워드) 단어로 조회")
     void findByTitle(){
         //given
         Member member = memberJdbcServiceV2.join(new Member(null, "태용", "라이언"));
@@ -77,6 +81,7 @@ class WriteJdbcRepositoryV2Test {
 
     }
     @Test
+    @DisplayName("게시글 전체 조회")
     void findAll() {
         //given
         Member member1 = memberJdbcServiceV2.join(new Member(null, "태용", "라이언"));
@@ -98,6 +103,7 @@ class WriteJdbcRepositoryV2Test {
 
 
     @Test
+    @DisplayName("게시글 수정")
     void update() {
         //given
         Member member = memberJdbcServiceV2.join(new Member(null, "태용", "라이언"));
@@ -119,6 +125,7 @@ class WriteJdbcRepositoryV2Test {
     }
 
     @Test
+    @DisplayName("게시글 삭제")
     void delete() {
         //given
         Member member = memberJdbcServiceV2.join(new Member(null, "태용", "라이언"));

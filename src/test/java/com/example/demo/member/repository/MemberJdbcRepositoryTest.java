@@ -1,7 +1,6 @@
 package com.example.demo.member.repository;
 
 import com.example.demo.member.entity.Member;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class MemberJdbcRepositoryTest {
@@ -31,7 +29,7 @@ class MemberJdbcRepositoryTest {
 
         //then
 //        Optional<Member> actual = memberJdbcRepository.findById(member.getId());
-        Optional<Member> actual = memberJdbcRepository.findByNickname(member.getNickname());
+        Optional<Member> actual = memberJdbcRepository.duplicateNicknameCheck(member.getNickname());
         assertThat(actual.get().getNickname()).isEqualTo(member.getNickname());
     }
 
@@ -54,7 +52,7 @@ class MemberJdbcRepositoryTest {
         //given
         Member expected = memberJdbcRepository.save(new Member(null, "태용", "라이언"));
         //when
-        Member actual = memberJdbcRepository.findByNickname(expected.getNickname()).get();
+        Member actual = memberJdbcRepository.duplicateNicknameCheck(expected.getNickname()).get();
         //then
         assertThat(actual.getNickname()).isEqualTo(expected.getNickname());
     }

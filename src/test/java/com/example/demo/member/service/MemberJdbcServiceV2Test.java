@@ -3,6 +3,7 @@ package com.example.demo.member.service;
 import com.example.demo.member.entity.Member;
 import com.example.demo.member.repository.MemberJdbcRepositoryV2;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,7 +29,9 @@ class MemberJdbcServiceV2Test {
         memberJdbcRepositoryV2.clear( );
     }
 
+
     @Test
+    @DisplayName("회원 가입")
     void join() {
         //given & when
         Member expected = memberJdbcServiceV2.join(new Member(null, "태용", "라이언"));
@@ -41,6 +44,7 @@ class MemberJdbcServiceV2Test {
     }
 
     @Test
+    @DisplayName("중복 닉네임 검사")
     void duplicateNicknameCheck(){
         //given
         Member member1 = new Member(null, "태용", "라이언");
@@ -57,6 +61,7 @@ class MemberJdbcServiceV2Test {
     }
 
     @Test
+    @DisplayName("전체 회원 정보 조회")
     void findAllMember() {
         //given
         Member expected1 = memberJdbcServiceV2.join(new Member(null, "태용", "라이언"));
@@ -79,6 +84,7 @@ class MemberJdbcServiceV2Test {
     }
 
     @Test
+    @DisplayName("회원 아이디로 정보 검색")
     void findOneMember() {
         //given
         Member expected = memberJdbcServiceV2.join(new Member(null, "태용", "라이언"));
@@ -91,6 +97,7 @@ class MemberJdbcServiceV2Test {
     }
 
     @Test
+    @DisplayName("회원 탈퇴")
     void deleteMember() {
         //given
         Member expected = memberJdbcServiceV2.join(new Member(null, "태용", "라이언"));

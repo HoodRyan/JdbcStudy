@@ -2,8 +2,6 @@ package com.example.demo.member.service;
 
 import com.example.demo.member.entity.Member;
 import com.example.demo.member.repository.MemberJdbcRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -26,7 +24,7 @@ public class MemberJdbcService implements MemberService{
 
     //중복 닉네임 검사
     private void duplicateNicknameCheck(Member member){
-        memberJdbcRepository.findByNickname(member.getNickname())
+        memberJdbcRepository.duplicateNicknameCheck(member.getNickname())
                 .ifPresent(m -> {   //ifPresent -> Optional 안에 null이 아닌 값이 있으면 동작
                     throw new IllegalStateException("이미 존재하는 닉네임입니다");
                 });

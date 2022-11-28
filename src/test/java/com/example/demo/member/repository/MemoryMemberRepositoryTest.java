@@ -1,7 +1,6 @@
 package com.example.demo.member.repository;
 
 import com.example.demo.member.entity.Member;
-import com.example.demo.member.repository.MemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,7 +49,7 @@ class MemoryMemberRepositoryTest {
         //given
         Member expected = memberRepository.save(new Member(null, "태용", "라이언"));
         //when
-        Member actual = memberRepository.findByNickname(expected.getNickname()).get();
+        Member actual = memberRepository.duplicateNicknameCheck(expected.getNickname()).get();
         //then
         assertThat(actual.getNickname()).isEqualTo(expected.getNickname());
 

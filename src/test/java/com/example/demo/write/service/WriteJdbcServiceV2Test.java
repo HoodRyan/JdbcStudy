@@ -7,6 +7,7 @@ import com.example.demo.write.entity.Write;
 import com.example.demo.write.repository.WriteJdbcRepositoryV2;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,6 +38,7 @@ class WriteJdbcServiceV2Test {
     }
 
     @Test
+    @DisplayName("게시글 작성")
     void create() {
         //given & when
         Member member = memberJdbcServiceV2.join(new Member(null, "태용", "라이언"));
@@ -50,6 +52,7 @@ class WriteJdbcServiceV2Test {
     }
 
     @Test
+    @DisplayName("제목(키워드) 단어로 검색")
     void searchTitle(){
         //given
         Member member = memberJdbcServiceV2.join(new Member(null, "태용", "라이언"));
@@ -67,14 +70,16 @@ class WriteJdbcServiceV2Test {
         assertThat(actual.get(1).getWriteId()).isEqualTo(expected3.getWriteId());
         assertThat(actual.get(0).getTitle()).isEqualTo(expected1.getTitle());
 
-        for(int i=0;i<actual.size();i++){
-            System.out.println(actual.get(i).getTitle() +" "+ actual.get(i).getContent() +" "+ actual.get(i).getMember_id());
-        }
+
+//        for(int i=0;i<actual.size();i++){
+//            System.out.println(actual.get(i).getTitle() +" "+ actual.get(i).getContent() +" "+ actual.get(i).getMember_id());
+//        }
     }
 
 
 
     @Test
+    @DisplayName("게시글 전체 불러오기")
     void findAllWrite() {
         //given
         Member member1 = memberJdbcServiceV2.join(new Member(null, "태용", "라이언"));
@@ -94,6 +99,7 @@ class WriteJdbcServiceV2Test {
     }
 
     @Test
+    @DisplayName("게시글 아이디로 정보 불러오기")
     void findOneWrite() {
         //given
         Member member = memberJdbcServiceV2.join(new Member(null, "태용", "라이언"));
@@ -107,6 +113,7 @@ class WriteJdbcServiceV2Test {
     }
 
     @Test
+    @DisplayName("게시글 수정")
     void update() {
         //given
         Member member = memberJdbcServiceV2.join(new Member(null, "태용", "라이언"));
@@ -127,6 +134,7 @@ class WriteJdbcServiceV2Test {
     }
 
     @Test
+    @DisplayName("게시글 삭제")
     void delete() {
         //given
         Member member = memberJdbcServiceV2.join(new Member(null, "태용", "라이언"));

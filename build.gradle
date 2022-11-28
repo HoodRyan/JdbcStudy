@@ -19,6 +19,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
+	//롬복 추가
+	implementation 'org.projectlombok:lombok'
 
 	//H2 데이터베이스 추가
 	runtimeOnly 'com.h2database:h2'

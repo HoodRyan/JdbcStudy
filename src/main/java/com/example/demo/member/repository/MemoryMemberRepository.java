@@ -31,7 +31,7 @@ public class MemoryMemberRepository implements MemberRepository {
     }
 
     @Override
-    public Optional<Member> findByNickname(String nickname) {
+    public Optional<Member> duplicateNicknameCheck(String nickname) {
         return store.values() //해쉬맵의 컬렉션
                 .stream() //컬렉션 순회
                 .filter(member -> member.getNickname().equals(nickname)) //스트림에서 나오는 데이터 중 특정 값만 골라냄

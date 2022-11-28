@@ -16,30 +16,24 @@ import java.util.*;
 
 public class MemberJdbcRepositoryV2 implements MemberRepository{
 
+    private static final String Member = "Member";
+
     private final NamedParameterJdbcTemplate template;
     private final SimpleJdbcInsert jdbcInsert;
 
     public MemberJdbcRepositoryV2(DataSource dataSource){
         this.template = new NamedParameterJdbcTemplate(dataSource);
         this.jdbcInsert = new SimpleJdbcInsert(dataSource)
-                .withTableName("MEMBER")
+                .withTableName(Member)
                 .usingGeneratedKeyColumns("id")
                 .usingColumns("name","nickname");
     }
 
-
-//    @Override
-//    public Member save(Member member) {
-//        String sql = "insert into Member (name, nickname) " +
-//                "values (:name, :nickname)";
-//        SqlParameterSource param = new BeanPropertySqlParameterSource(member);
-//        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
-//        template.update(sql,param,keyHolder);
-//        long key = keyHolder.getKey().longValue();
-//        member.setId(key);
-//        return member;
-//    }
-
+    /**
+     * 멤버 저장
+     * @param member
+     * @return
+     */
     @Override
     public Member save(Member member){
         SqlParameterSource param = new BeanPropertySqlParameterSource(member);
@@ -47,7 +41,11 @@ public class MemberJdbcRepositoryV2 implements MemberRepository{
         return new Member(id, member.getName(), member.getNickname());
     }
 
-
+    /**
+     * 멤버 아이디로 검색
+     * @param memberId
+     * @return
+     */
     @Override
     public Optional<Member> findById(Long memberId) {
         String sql = "select * from Member where id = :id";
@@ -60,8 +58,13 @@ public class MemberJdbcRepositoryV2 implements MemberRepository{
         }
     }
 
+    /**
+     * 닉네임으로 회원 정보 검색
+     * @param nickname
+     * @return
+     */
     @Override
-    public Optional<Member> findByNickname(String nickname) {
+    public Optional<Member> duplicateNicknameCheck(String nickname) {
         String sql = "select * from Member where nickname = :nickname";
         try{
             Map<String, Object> param = Collections.singletonMap("nickname", nickname);
@@ -72,6 +75,10 @@ public class MemberJdbcRepositoryV2 implements MemberRepository{
         }
     }
 
+    /**
+     * 전체 멤버 조회
+     * @return
+     */
     @Override
     public List<Member> findAll() {
         String sql = "select * from Member";
@@ -79,6 +86,10 @@ public class MemberJdbcRepositoryV2 implements MemberRepository{
         return find;
     }
 
+    /**
+     * 멤버 삭제
+     * @param memberId
+     */
     @Override
     public void delete(Long memberId) {
         String sql = "delete from Member where id = :id";
@@ -94,9 +105,6 @@ public class MemberJdbcRepositoryV2 implements MemberRepository{
         }
     }
 
-//    private RowMapper<Member> memberRowMapper(){
-//        return BeanPropertyRowMapper.newInstance(Member.class);
-//    }
 
     private RowMapper<Member> memberRowMapper(){
         return (rs, rowNum) -> {

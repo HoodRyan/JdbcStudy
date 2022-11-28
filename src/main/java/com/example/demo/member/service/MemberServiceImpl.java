@@ -28,7 +28,7 @@ public class MemberServiceImpl implements MemberService {
 
     //중복 닉네임 검사
     private void duplicateNicknameCheck(Member member){
-        memberRepository.findByNickname(member.getNickname())
+        memberRepository.duplicateNicknameCheck(member.getNickname())
                 .ifPresent(m -> {   //ifPresent -> Optional 안에 null이 아닌 값이 있으면 동작
                     throw new IllegalStateException("이미 존재하는 닉네임입니다");
                 });

@@ -1,7 +1,6 @@
 package com.example.demo.member.service;
 
 import com.example.demo.member.entity.Member;
-import com.example.demo.member.repository.MemberJdbcRepository;
 import com.example.demo.member.repository.MemberJdbcRepositoryV2;
 
 import java.util.List;
@@ -16,6 +15,11 @@ public class MemberJdbcServiceV2 implements MemberService{
         this.memberJdbcRepository = memberJdbcRepository;
     }
 
+    /**
+     * 회원가입
+     * @param member
+     * @return
+     */
     @Override
     public Member join(Member member) {
         duplicateNicknameCheck(member);
@@ -23,20 +27,31 @@ public class MemberJdbcServiceV2 implements MemberService{
         return memberJdbcRepository.save(member);
     }
 
-    //중복 닉네임 검사
+    /**
+     * 중복 닉네임 검사
+     * @param member
+     */
     private void duplicateNicknameCheck(Member member){
-        memberJdbcRepository.findByNickname(member.getNickname())
+        memberJdbcRepository.duplicateNicknameCheck(member.getNickname())
                 .ifPresent(m -> {   //ifPresent -> Optional 안에 null이 아닌 값이 있으면 동작
                     throw new IllegalStateException("이미 존재하는 닉네임입니다");
                 });
     }
 
-
+    /**
+     * 전체 멤버 조회
+     * @return
+     */
     @Override
     public List<Member> findAllMember() {
         return memberJdbcRepository.findAll();
     }
 
+    /**
+     * 멤버 정보 조회
+     * @param memberId
+     * @return
+     */
     @Override
     public Optional<Member> findOneMember(Long memberId) {
 
@@ -47,6 +62,10 @@ public class MemberJdbcServiceV2 implements MemberService{
         return byId;
     }
 
+    /**
+     * 회원 탈퇴
+     * @param memberId
+     */
     @Override
     public void deleteMember(Long memberId) {
         memberJdbcRepository.delete(memberId);

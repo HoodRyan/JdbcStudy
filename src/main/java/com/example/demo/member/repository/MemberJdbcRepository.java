@@ -53,7 +53,7 @@ public class MemberJdbcRepository implements MemberRepository{
     }
 
     @Override
-    public Optional<Member> findByNickname(String nickname) {
+    public Optional<Member> duplicateNicknameCheck(String nickname) {
         String sql = "select * from member where nickname = ?";
         try{
             Member member = jdbcTemplate.queryForObject(sql, rowMapper, nickname);

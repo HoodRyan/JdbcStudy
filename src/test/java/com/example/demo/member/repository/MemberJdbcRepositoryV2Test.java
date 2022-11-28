@@ -1,8 +1,8 @@
 package com.example.demo.member.repository;
 
 import com.example.demo.member.entity.Member;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class MemberJdbcRepositoryV2Test {
@@ -27,6 +26,7 @@ class MemberJdbcRepositoryV2Test {
 
 
     @Test
+    @DisplayName("멤버 정보 저장")
     void save() {
         //given & when
         Member member = memberJdbcRepositoryV2.save(new Member(null, "태용", "라이언"));
@@ -38,6 +38,7 @@ class MemberJdbcRepositoryV2Test {
     }
 
     @Test
+    @DisplayName("멤버 아이디로 정보 검색")
     void findById() {
         //given
         Member expected = memberJdbcRepositoryV2.save(new Member(null, "태용", "라이언"));
@@ -50,12 +51,13 @@ class MemberJdbcRepositoryV2Test {
     }
 
     @Test
+    @DisplayName("멤버 닉네임으로 정보 검색")
     void findByNickname() {
         //given
         Member expected = memberJdbcRepositoryV2.save(new Member(null, "태용", "라이언"));
 
         //when
-        Member actual = memberJdbcRepositoryV2.findByNickname(expected.getNickname()).get();
+        Member actual = memberJdbcRepositoryV2.duplicateNicknameCheck(expected.getNickname()).get();
 
 
         //then
@@ -63,6 +65,7 @@ class MemberJdbcRepositoryV2Test {
     }
 
     @Test
+    @DisplayName("전체 멤버 정보 조회")
     void findAll() {
         //given
         Member save1 = memberJdbcRepositoryV2.save(new Member(null, "태용", "라이언"));
@@ -86,6 +89,7 @@ class MemberJdbcRepositoryV2Test {
     }
 
     @Test
+    @DisplayName("멤버 정보 삭제")
     void delete() {
         //given
         Member expected1 = memberJdbcRepositoryV2.save(new Member(null, "태용", "라이언"));

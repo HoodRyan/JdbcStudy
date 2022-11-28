@@ -9,7 +9,7 @@ public interface MemberRepository {
 
     Member save(Member member);
     Optional<Member> findById(Long memberId);
-    Optional<Member> findByNickname(String nickname);
+    Optional<Member> duplicateNicknameCheck(String nickname);
     List<Member> findAll();
     void delete(Long memberId);
     void clear();
