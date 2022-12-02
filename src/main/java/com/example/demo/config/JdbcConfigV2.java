@@ -7,20 +7,17 @@ import com.example.demo.member.service.MemberJdbcServiceV2;
 import com.example.demo.write.repository.WriteJdbcRepositoryV2;
 import com.example.demo.write.repository.WriteRepository;
 import com.example.demo.write.service.WriteJdbcServiceV2;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
 @Configuration
+@RequiredArgsConstructor
 public class JdbcConfigV2 {
 
     private final DataSource dataSource;
-
-
-    public JdbcConfigV2(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
 
     @Bean
     public MemberJdbcServiceV2 memberJdbcServiceV2(){

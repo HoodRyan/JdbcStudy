@@ -2,6 +2,7 @@ package com.example.demo.member.service;
 
 import com.example.demo.member.entity.Member;
 import com.example.demo.member.repository.MemberJdbcRepositoryV2;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.NoSuchElementException;

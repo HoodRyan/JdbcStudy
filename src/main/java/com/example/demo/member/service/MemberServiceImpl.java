@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-@Component
+
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;

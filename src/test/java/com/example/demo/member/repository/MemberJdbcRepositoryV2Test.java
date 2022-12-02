@@ -12,12 +12,10 @@ import java.util.List;
 
 import static com.example.demo.common.MemberFixtures.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @Slf4j
 class MemberJdbcRepositoryV2Test {
-
 
     @Autowired
     MemberJdbcRepositoryV2 memberJdbcRepositoryV2;

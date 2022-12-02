@@ -14,6 +14,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import javax.sql.DataSource;
 import java.util.*;
 
+
 public class MemberJdbcRepositoryV2 implements MemberRepository{
 
     private static final String Member = "Member";

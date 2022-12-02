@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.util.*;
 
-//@Repository
+
 public class WriteJdbcRepositoryV2 implements WriteRepository{
 
     private static final String Write = "Write";

@@ -4,6 +4,7 @@ import com.example.demo.config.JdbcConfig;
 import com.example.demo.config.JdbcConfigV2;
 import com.example.demo.config.SpringConfig;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
