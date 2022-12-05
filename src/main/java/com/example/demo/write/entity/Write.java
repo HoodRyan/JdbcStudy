@@ -11,6 +11,9 @@ public class Write {
     private String content;
     private Long member_id;
 
+    public Write() {
+
+    }
     public Write(Long writeId, String title, String content, Long memberId){
         this.writeId = writeId;
         this.title = title;
